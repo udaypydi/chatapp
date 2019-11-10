@@ -25,12 +25,23 @@
       $(function () {
         var socket = io();
         $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
+          const messageObj = { messages:
+                [ { text: $('#m').val(),
+                    user: [{
+                      "_id": 1,
+                    }],
+                    createdAt: new Date(),
+                    _id: (Math.random() * 1000000).toString() } 
+                ] 
+                };
+ 
+          socket.emit('sendMessage', messageObj.messages);
           $('#m').val('');
           return false;
         });
-        socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(msg));
+        socket.on('receiveMessage', function(msg){
+          console.log(msg);
+          $('#messages').append($('<li>').text(msg[0].text));
           window.scrollTo(0, document.body.scrollHeight);
         });
       });
