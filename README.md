@@ -4,3 +4,4 @@
 - Video call support.
 - Audio call support.
 - Socket IO for messaging
+- Individual ChatRoom
